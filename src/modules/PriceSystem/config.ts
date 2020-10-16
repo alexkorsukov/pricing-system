@@ -61,3 +61,14 @@ export const TaxRates: TaxRateType = [
     taxRate: 0,
   },
 ];
+
+/**
+ * Error codes
+ */
+export const ERRORS = {
+  ERROR_NUMBER_OF_ITEMS:
+    'Number of items must be greater than zero and integer.',
+  ERROR_PRICE: 'Price must be greater than zero.',
+  ERROR_STATE_CODE:
+    'Orders from the province/state code you provided are not accepted.',
+};

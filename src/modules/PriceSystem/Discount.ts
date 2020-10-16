@@ -1,4 +1,5 @@
 import { DiscountRates, DiscountRateType } from './config';
+import { Validator } from './Validator';
 
 interface DiscountInterface {
   getPriceWithDiscount(numberOfItems: number, pricePerItem: number): number;
@@ -24,6 +25,12 @@ export class Discount implements DiscountInterface {
     numberOfItems: number,
     pricePerItem: number
   ): number {
+    // Validate
+    const validator = new Validator();
+    validator.validateNumberOfItems(numberOfItems);
+    validator.validatePricePerItem(pricePerItem);
+
+    // Main logic
     const orderPrice = numberOfItems * pricePerItem;
     const discount = this.getDiscount(orderPrice);
 

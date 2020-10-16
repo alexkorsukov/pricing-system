@@ -3,6 +3,7 @@
  */
 import { Discount } from './Discount';
 import { Tax } from './Tax';
+import { Validator } from './Validator';
 
 export type PriceSystemType = {
   numItems: number;
@@ -16,6 +17,13 @@ export type PriceSystemType = {
  * @param args
  */
 export const doCalculation = (args: PriceSystemType): string => {
+  // Validate input first
+  const validator = new Validator();
+  validator.validateNumberOfItems(args.numItems);
+  validator.validatePricePerItem(args.pricePerItem);
+  validator.validateStateCode(args.stateCode);
+
+  // Mail logic
   const priceWithDiscount = new Discount().getPriceWithDiscount(
     args.numItems,
     args.pricePerItem

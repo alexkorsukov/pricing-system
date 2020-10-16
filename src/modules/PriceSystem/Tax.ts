@@ -1,7 +1,10 @@
 import { TaxRates, TaxRateType } from './config';
+import { Validator } from './Validator';
 
 interface TaxInterface {
   getPriceAfterTax(priceBeforeTax: number, stateCode: string): number;
+
+  getTaxRate(stateCode: string): number | boolean;
 }
 
 /**
@@ -21,12 +24,20 @@ export class Tax implements TaxInterface {
    * @param pricePerItem
    */
   public getPriceAfterTax(priceBeforeTax: number, stateCode: string): number {
-    const taxRate: number = this.getTaxRate(stateCode);
+    // Validate
+    const validator = new Validator();
+    validator.validatePricePerItem(priceBeforeTax);
+    validator.validateStateCode(stateCode);
 
-    // Apply discount to the order price
-    const priceAfterTax = priceBeforeTax * (1 + taxRate / 100);
+    // Main logic
+    const taxRate = this.getTaxRate(stateCode);
 
-    return priceAfterTax;
+    if (typeof taxRate === 'number') {
+      // Apply discount to the order price
+      const priceAfterTax = priceBeforeTax * (1 + taxRate / 100);
+
+      return priceAfterTax;
+    }
   }
 
   /**
@@ -35,7 +46,7 @@ export class Tax implements TaxInterface {
    * @param orderPrice
    * @private
    */
-  private getTaxRate(stateCode: string): number {
+  public getTaxRate(stateCode: string): number | boolean {
     stateCode = stateCode.trim().toUpperCase();
 
     // Loop the rates to find appropriate tax rate
@@ -45,9 +56,6 @@ export class Tax implements TaxInterface {
       }
     }
 
-    // Throw an exception as sales tax cannot be found in the DB
-    throw new Error(
-      'Orders from the province/state code you provided are not accepted.'
-    );
+    return false;
   }
 }
