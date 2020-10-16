@@ -4,7 +4,7 @@
 import { Discount } from './Discount';
 import { Tax } from './Tax';
 
-type PriceSystemType = {
+export type PriceSystemType = {
   numItems: number;
   pricePerItem: number;
   stateCode: string;
@@ -35,7 +35,10 @@ export const doCalculation = (args: PriceSystemType): string => {
  *
  * @param val
  */
-const toPriceFormat = (val: string | number, noDecimalZeros = true): string => {
+const toPriceFormat = (
+  val: string | number,
+  noDecimalZeros = false
+): string => {
   let minimumFractionDigits = 2;
 
   // No no decimal zeros 105.00 -> 105

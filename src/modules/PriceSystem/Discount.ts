@@ -43,7 +43,7 @@ export class Discount implements DiscountInterface {
     let discount = 0;
 
     // Loop the rates to find appropriate discount
-    for (let entry of this.rates) {
+    for (const entry of this.rates) {
       if (orderPrice < entry.orderValue) {
         return discount;
       } else if (orderPrice >= entry.orderValue) {

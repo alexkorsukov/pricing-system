@@ -34,10 +34,6 @@ export const DiscountRates: DiscountRateType = [
     orderValue: 10000,
     discountRate: 10,
   },
-  {
-    orderValue: 1000,
-    discountRate: 3,
-  },
 ];
 
 /**
@@ -53,7 +49,7 @@ export const TaxRates: TaxRateType = [
     taxRate: 13,
   },
   {
-    province: 'QB',
+    province: 'QC',
     taxRate: 14.975,
   },
   {

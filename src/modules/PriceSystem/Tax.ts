@@ -39,19 +39,15 @@ export class Tax implements TaxInterface {
     stateCode = stateCode.trim().toUpperCase();
 
     // Loop the rates to find appropriate tax rate
-    for (let entry of this.rates) {
+    for (const entry of this.rates) {
       if (entry.province === stateCode) {
         return entry.taxRate;
       }
     }
 
     // Throw an exception as sales tax cannot be found in the DB
-    try {
-      throw new Error(
-        `Orders from the province/state code you provided (${stateCode}) are not accepted.`
-      );
-    } catch (e) {
-      console.log(e);
-    }
+    throw new Error(
+      'Orders from the province/state code you provided are not accepted.'
+    );
   }
 }
